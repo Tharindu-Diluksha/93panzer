@@ -1,0 +1,6 @@
+E:\Project\TankgameG36ConsoleApp1\TankgameG36ConsoleApp1\bin\Debug\TankgameG36ConsoleApp1.exe.config
+E:\Project\TankgameG36ConsoleApp1\TankgameG36ConsoleApp1\bin\Debug\TankgameG36ConsoleApp1.exe
+E:\Project\TankgameG36ConsoleApp1\TankgameG36ConsoleApp1\bin\Debug\TankgameG36ConsoleApp1.pdb
+E:\Project\TankgameG36ConsoleApp1\TankgameG36ConsoleApp1\obj\Debug\TankgameG36ConsoleApp1.csprojResolveAssemblyReference.cache
+E:\Project\TankgameG36ConsoleApp1\TankgameG36ConsoleApp1\obj\Debug\TankgameG36ConsoleApp1.exe
+E:\Project\TankgameG36ConsoleApp1\TankgameG36ConsoleApp1\obj\Debug\TankgameG36ConsoleApp1.pdb
