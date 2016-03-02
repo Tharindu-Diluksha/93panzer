@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TankgameG36ConsoleApp1.Model;
 using System.Drawing;
-using Panzer_93.Model;
+using TankgameG36ConsoleApp1.Model;
 
 
 namespace TankgameG36ConsoleApp1.Network
@@ -30,7 +30,8 @@ namespace TankgameG36ConsoleApp1.Network
 
         public static void decode(string message)
         {
-
+            Map.reduceTime();
+            Map.achieveCoinLife();
             char firstL = message[0];
     
             if(message.StartsWith("S:"))  //**********************  Acceptance ******************
@@ -102,7 +103,7 @@ namespace TankgameG36ConsoleApp1.Network
                 //I:P1: < x>,<y>;< x>,<y>;< x>,<y>…..< x>,<y>:  < x>,<y>;< x>,<y>;< x>,<y>…..< x>,<y>:
                 String[] tokernizedGameDetails = msg.Split(':');
                 String ourPlayer = tokernizedGameDetails[1];
-
+                Game.setMyname(tokernizedGameDetails[1]);
                 //first item is player, by removing that we can easily listed cordinates of walls, stone and water cells
                 tokernizedGameDetails = tokernizedGameDetails.Except(new String[] { ourPlayer, tokernizedGameDetails[0] }).ToArray();
                 int count = 1;
@@ -165,6 +166,7 @@ namespace TankgameG36ConsoleApp1.Network
 
                     newPlayer.Direction = int.Parse(word[2]);
                     Game.setplayers(newPlayer);
+                    
                 }
                 catch (IndexOutOfRangeException e)
                 {
@@ -173,6 +175,7 @@ namespace TankgameG36ConsoleApp1.Network
                 //set direction
                 
             }
+            Game.setOurPlayer();
             Map.initPlayers(Game.getPlayers());
             Program.printMap();
         }
@@ -216,8 +219,6 @@ namespace TankgameG36ConsoleApp1.Network
                     }
                
             }
-            //Map.initMap(Game.getWall(), Game.getStone(), Game.getWater());
-            //Map.initPlayers(Game.getPlayers());
             Map.updateMap();
             Program.printMap();
         }

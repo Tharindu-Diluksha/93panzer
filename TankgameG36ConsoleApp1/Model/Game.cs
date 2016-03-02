@@ -1,4 +1,4 @@
-﻿using Panzer_93.Model;
+﻿using TankgameG36ConsoleApp1.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,8 @@ namespace TankgameG36ConsoleApp1.Model
 {
     class Game
     {
+        private static String myName;
+        private static Player ourPlayer;
         private static List<Array> movableCellList;
         private static List<Array> fixedCellList;
         private static List<Player> playerList;
@@ -17,6 +19,7 @@ namespace TankgameG36ConsoleApp1.Model
         private static List<Array> walllist;
         private static List<Array> stonelist;
         private static List<Array> waterlist;
+        
 
         public static void  gameinit(){
             walllist = new List<Array>(); //bricks which can be destroyed by shooting
@@ -28,6 +31,42 @@ namespace TankgameG36ConsoleApp1.Model
             coinPillList = new List<Coin>();
             lifePackList = new List<LifePack>();
             
+        }
+        public static void setMyname(String name)
+        {
+            myName = name;
+        }
+        public static void setOurPlayer()
+        {
+            foreach (Player p in Game.getPlayers())
+            {
+                if (p.PlayerNo == myName)
+                {
+                    ourPlayer = p;
+                }
+            }
+        }
+        public static Player getOurPlayer()
+        {
+            return ourPlayer;
+        }
+
+        public static void setMovableCells(int[] XY)
+        {
+            movableCellList.Add(XY);
+        }
+        public static List<Array> getMovableCells()
+        {
+            return movableCellList;
+        }
+
+        public static void setFixedCells(int[] XY)
+        {
+            fixedCellList.Add(XY);
+        }
+        public static List<Array> getFixedCells()
+        {
+            return fixedCellList;
         }
 
         public static void setWall(string[] pointSplit)
@@ -74,6 +113,10 @@ namespace TankgameG36ConsoleApp1.Model
         {
             return coinPillList;
         }
+        public static void removeCoin(Coin coin)
+        {
+            coinPillList.Remove(coin);
+        }
 
         public static void setLifePacks(LifePack lifepack)
         {
@@ -83,7 +126,9 @@ namespace TankgameG36ConsoleApp1.Model
         {
             return lifePackList;
         }
-
-
+        public static void removeLifePack(LifePack lifepack)
+        {
+            lifePackList.Remove(lifepack);
+        }
     }
 }

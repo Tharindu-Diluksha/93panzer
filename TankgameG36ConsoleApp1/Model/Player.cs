@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Panzer_93.Model
+namespace TankgameG36ConsoleApp1.Model
 {
     class Player
     {

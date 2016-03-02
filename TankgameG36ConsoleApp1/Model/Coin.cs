@@ -33,7 +33,7 @@ namespace TankgameG36ConsoleApp1.Model
         {
             this.lifeTime = lifeTime;
         }
-        public float getLife()
+        public int getLife()
         {
             return lifeTime;
         }

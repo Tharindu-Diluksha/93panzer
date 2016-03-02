@@ -1,4 +1,4 @@
-﻿using Panzer_93.Model;
+﻿using TankgameG36ConsoleApp1.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,8 +31,10 @@ namespace TankgameG36ConsoleApp1.Model
                 {
                     if (mapDetail[i, j] == null || mapDetail[i, j] != "S" || mapDetail[i, j] != "W" || mapDetail[i, j] != "B0" || mapDetail[i, j] != "B1" || mapDetail[i, j] != "B2" || mapDetail[i, j] != "B3")
                     {
-                        mapDetail[i, j] = "k";
+                        mapDetail[i, j] = "N";
+                        Game.setMovableCells(new int[2] {i,j});
                     }
+                    
                 }
             }
 
@@ -60,6 +62,7 @@ namespace TankgameG36ConsoleApp1.Model
                     if (mapDetail[i, j] == null || (mapDetail[i, j] != "S" && mapDetail[i, j] != "W" && mapDetail[i, j] != "B0" && mapDetail[i, j] != "B1" && mapDetail[i, j] != "B2" && mapDetail[i, j] != "B3"))
                     {
                         mapDetail[i, j] = "N";
+                        Game.setMovableCells(new int[2] { i, j });
                     }
                 }
             }
@@ -112,6 +115,76 @@ namespace TankgameG36ConsoleApp1.Model
                 mapDetail[l.getCordinate()[0], l.getCordinate()[1]] = "L";
 
             }
+        }
+
+        public static void reduceTime()
+        {
+            if (Game.getLifePacks() != null)
+            {
+                int sizeLifepacklist = Game.getLifePacks().Count - 1;
+                for (int i=0; i<=sizeLifepacklist; i++)
+                {
+                    Game.getLifePacks()[i].setLife(Game.getLifePacks()[i].getLife() - 1000);
+                    if (Game.getLifePacks()[i].getLife() <= 0)
+                    {
+                        Game.removeLifePack(Game.getLifePacks()[i]);
+                        sizeLifepacklist=sizeLifepacklist - 1;
+                    }
+                }
+            }
+
+            if (Game.getCoins() != null)
+            {
+                int sizeCoinList = Game.getCoins().Count - 1;
+                for (int j = 0; j <= sizeCoinList; j++)
+                {
+                    Game.getCoins()[j].setLife(Game.getCoins()[j].getLife() - 1000);
+                    if (Game.getCoins()[j].getLife() <= 0)
+                    {
+                        Game.removeCoin(Game.getCoins()[j]);
+                        sizeCoinList = sizeCoinList - 1;
+                    }
+                }
+            }
+        }
+
+        public static void achieveCoinLife()
+        {
+            if (Game.getPlayers() != null)
+            {
+                foreach (Player p in Game.getPlayers())
+                {
+                    if (Game.getLifePacks() != null)
+                    {
+                        int sizeLifepacklist = Game.getLifePacks().Count - 1;
+                        for (int i = 0; i <= sizeLifepacklist; i++)
+                        {
+                            Game.getLifePacks()[i].setLife(Game.getLifePacks()[i].getLife() - 1000);
+                            if (Game.getLifePacks()[i].getCordinate() == p.getCordinate())
+                            {
+                                Game.removeLifePack(Game.getLifePacks()[i]);
+                                sizeLifepacklist = sizeLifepacklist - 1;
+                            }
+                        }
+                    }
+
+                    if (Game.getCoins() != null)
+                    {
+                        int sizeCoinList = Game.getCoins().Count - 1;
+                        for (int j = 0; j <= sizeCoinList; j++)
+                        {
+                            Game.getCoins()[j].setLife(Game.getCoins()[j].getLife() - 1000);
+                            if (Game.getCoins()[j].getCordinate() == p.getCordinate())
+                            {
+                                Game.removeCoin(Game.getCoins()[j]);
+                                sizeCoinList = sizeCoinList - 1;
+                            }
+                        }
+                    }
+                }
+
+            }
+            
         }
     }
 }
