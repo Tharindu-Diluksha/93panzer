@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TankgameG36ConsoleApp1.Model;
 using System.Drawing;
+using Panzer_93.Model;
 
 
 namespace TankgameG36ConsoleApp1.Network
@@ -12,13 +13,13 @@ namespace TankgameG36ConsoleApp1.Network
     class MessageHandler
     {
 
-        private String joinError; // when joing the server error occured : PLAYERS_FULL // ALREADY_ADDED // GAME_ALREADY_STARTED
-        private String movingshootingError; // OBSTACLE // CELL_OCCUPIED //TOO_QUICK // INVALID_CELL // GAME_NOT_STARTED_YET // NOT_A_VALID_CONTESTANT
-        private Boolean gameFinished; // GAME_FINISHED // GAME_HAS_FINISHED
-        private Boolean myPlayerDead; // DEAD //PITFALL 
-        private String error; // other exception 
-        private Boolean errorOccupied; // when exception happen, true
-
+        private static String joinError; // when joing the server error occured : PLAYERS_FULL // ALREADY_ADDED // GAME_ALREADY_STARTED
+        private static String movingshootingError; // OBSTACLE // CELL_OCCUPIED //TOO_QUICK // INVALID_CELL // GAME_NOT_STARTED_YET // NOT_A_VALID_CONTESTANT
+        private static Boolean gameFinished; // GAME_FINISHED // GAME_HAS_FINISHED
+        private static Boolean myPlayerDead; // DEAD //PITFALL 
+        private static String error; // other exception 
+        private static Boolean errorOccupied; // when exception happen, true
+        //private static List<Player> playerList = new List<Player>();
         
 
         
@@ -27,40 +28,47 @@ namespace TankgameG36ConsoleApp1.Network
             errorOccupied = false;
         }
 
-        public void decode(string message)
+        public static void decode(string message)
         {
 
             char firstL = message[0];
     
             if(message.StartsWith("S:"))  //**********************  Acceptance ******************
             {
-                Console.WriteLine("Acceptance Decode");
-                Console.WriteLine(message);
-                //acceptance_decode(message);
                 
-            }
-            else if(message.StartsWith("C:")) //***************** coins ***********************
-            {
-                //coin_popup(message);
-                Console.WriteLine("Found Coin");
-            }
-            else if (message.StartsWith("L:") ) // ************* life packs *******************
-            {
-               // lifepack_popup(message);
-                Console.WriteLine("Found Life pack");
-
+                Console.WriteLine(message);
+                acceptance_decode(message);
+                Console.WriteLine("Acceptance Decode");
+                
             }
             else if (message.StartsWith("I:")) //********** initialize ************************
             {
+                //Console.WriteLine(message);
                 GameInit_decode(message);
                 Console.WriteLine("Game inition Decode");
-                //Console.WriteLine(message);
+
             }
+            else if(message.StartsWith("C:")) //***************** coins ***********************
+            {
+                Console.WriteLine("Found Coin");
+                coin_popup(message);
+            }
+            else if (message.StartsWith("L:") ) // ************* life packs *******************
+            {  
+                Console.WriteLine("Found Life pack");
+                lifepack_popup(message);
+
+            }
+            
             else if (message.StartsWith("G:")) ///************ update *************************
             {
-               // Client_update_decode(message);
+                
                 Console.WriteLine("Client update once a second");
-            } //**************************************************************** ERROR HANDLING ****************************
+                //Console.WriteLine(message);
+                Client_update_decode(message);
+            } 
+
+            //******************* ERROR HANDLING ********************//
             else if (message.Equals(TankgameG36ConsoleApp1.Controller.Constant.S2C_CONTESTANTSFULL) || message.Equals(TankgameG36ConsoleApp1.Controller.Constant.S2C_ALREADYADDED) || message.Equals(TankgameG36ConsoleApp1.Controller.Constant.S2C_GAMESTARTED))
             {   // PLAYERS_FULL // ALREADY_ADDED // GAME_ALREADY_STARTED
                 joinError = message;
@@ -85,46 +93,10 @@ namespace TankgameG36ConsoleApp1.Network
             }
         }
 
-        
-
-        public void acceptance_decode(string msg)
-        {
-            String[] tokernizedPlayerDetails = msg.Split(':'); // :  p<num> ; X,Y ; direction   :
-            tokernizedPlayerDetails = tokernizedPlayerDetails.Except(new String[] { tokernizedPlayerDetails[0] }).ToArray();
-            foreach (String playerDetails in tokernizedPlayerDetails)
-            {
-               
-                String[] word = playerDetails.Split(';'); // split into player , point, direction
-               // Player newPlayer = new Player();
-               // newPlayer.PlayerNo = word[0]; // set palyer
-                //set point cordinates (X,Y)
-                try
-                {
-                    String[] positionSplit = word[1].Split(',');
-                   // newPlayer.Position = new Point(int.Parse(positionSplit[0]),int.Parse(positionSplit[1]));
-
-                  //  newPlayer.Direction = int.Parse(word[2]);
-                    //**************** PLAYER SET IN THE GAMEBOARD ************
-                
-                  //    gameBoard.ServerAccepted(newPlayer);
-                    //*********************************************************
-                }
-                catch (IndexOutOfRangeException e)
-                {
-
-                }
-                //set direction
-                
-            }
-
-        }
         //int count_init = 0;
-        public void GameInit_decode(string msg)
+        public static void GameInit_decode(string msg)
         {
-            List<Array> walllist = new List<Array>();
-            List<Array> stonelist = new List<Array>();
-            List<Array> waterlist = new List<Array>();
-            
+            Game.gameinit();
             try
             {
                 //I:P1: < x>,<y>;< x>,<y>;< x>,<y>…..< x>,<y>:  < x>,<y>;< x>,<y>;< x>,<y>…..< x>,<y>:
@@ -137,46 +109,76 @@ namespace TankgameG36ConsoleApp1.Network
                 //List<Cell> newList = new List<Cell>();
                 foreach (String details in tokernizedGameDetails)
                 {
-                    
+
                     String[] points = details.Split(';');
                     foreach (string word in points)
                     {
                         string[] pointSplit = word.Split(',');
-                       /*Point p = new Point(int.Parse(pointSplit[0]),int.Parse(pointSplit[1]));
-                        Cell newCell = new Cell(count, p, 4);
-                        newList.Add(newCell);*/ // list of points one of wall, stone, water
+                        // list of points one of wall, stone, water
                         if (count == 1)
                         {
                             //wall
-                            walllist.Add(pointSplit);
+                            Game.setWall(pointSplit);
                         }
                         else if (count == 2)
                         {
                             //stone
-                            stonelist.Add(pointSplit);
+                            Game.setStone(pointSplit);
                         }
                         else if (count == 3)
                         {
                             //water
-                            waterlist.Add(pointSplit);
+                            Game.setWater(pointSplit);
                         }
                     }
                     count++; // end of the for loop, increase count becouse of next time cordinate list will be next type
                 }
-                Map.initMap(walllist, stonelist, waterlist);
-
+                Map.initMap(Game.getWall(),Game.getStone(),Game.getWater());
+                Program.printMap();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("MessageHandler: Game initialization Failed! \n " + ex.Message);
+                Console.WriteLine(ex);
                 errorOccupied = true;
             }
-            
+
         }
 
-        public void Client_update_decode(string msg)
+        public static void acceptance_decode(string msg)
         {
-           // List<Player> gameClients = new List<Player>();
+            
+            String[] tokernizedPlayerDetails = msg.Split(':'); // :  p<num> ; X,Y ; direction   :
+            tokernizedPlayerDetails = tokernizedPlayerDetails.Except(new String[] { tokernizedPlayerDetails[0] }).ToArray();
+            foreach (String playerDetails in tokernizedPlayerDetails)
+            {
+               
+                String[] word = playerDetails.Split(';'); // split into player , point, direction
+                Player newPlayer = new Player();
+                newPlayer.PlayerNo = word[0]; // set palyer
+                //set point cordinates (X,Y)
+                try
+                {
+                    String[] positionSplit = word[1].Split(',');
+                   // newPlayer.Position = new Point(int.Parse(positionSplit[0]),int.Parse(positionSplit[1]));
+                    newPlayer.setCordinates(int.Parse(positionSplit[0]), int.Parse(positionSplit[1]));
+
+                    newPlayer.Direction = int.Parse(word[2]);
+                    Game.setplayers(newPlayer);
+                }
+                catch (IndexOutOfRangeException e)
+                {
+                    Console.WriteLine("Players initialisinf errror:- "+ e);
+                }
+                //set direction
+                
+            }
+            Map.initPlayers(Game.getPlayers());
+            Program.printMap();
+        }
+        
+        public static void Client_update_decode(string msg)
+        {
             //G:P1;< player location  x>,< player location  y>;<Direction>;< whether shot>;<health>;< coins>;< points>: 
             String[] tokernizedGameDetails = msg.Split(':');
             //first element is G , un-wanted data remore that and clear the array
@@ -184,7 +186,6 @@ namespace TankgameG36ConsoleApp1.Network
 
             //************************************************* Brick damage catch *******************************************************
             //brick walls damage level          < x>,<y>,<damage-level> 
-           // List<Cell> brickDamage = new List<Cell>();
             String brickDamageStr = tokernizedGameDetails[tokernizedGameDetails.Length - 1]; // get last string in array( brick damage cordinates)
             String[] brickDetails = brickDamageStr.Split(';');
             foreach (String s in brickDetails)
@@ -196,62 +197,64 @@ namespace TankgameG36ConsoleApp1.Network
             }
             //*************************************************** players detais catch *******************************************************
             tokernizedGameDetails = tokernizedGameDetails.Except(new String[] { brickDamageStr }).ToArray(); // remove brick details
-            int count = 1;
             foreach (String details in tokernizedGameDetails)
             {
                 String[] playerDetails = details.Split(';');
-                
-                {   //in player details there are 6 items in msg
-                   /* Player p = new Player();
-
-                    p.PlayerNo = playerDetails[0];
-                    // set player location (element 1 [0] )
-                    String[] positionSplit_G = playerDetails[1].Split(',');
-                    Point p_location = new Point(int.Parse(positionSplit_G[0]),int.Parse(positionSplit_G[1]));
-                        
-                    p.Position = p_location;
-                    // set player direction 
-                    p.Direction = int.Parse(playerDetails[2]);
-                    //set player shots
-                    p.Shots = int.Parse(playerDetails[3]);  //?????????????????????????????????????????  ERROR: CANT UNDERSTANT WHAT?     ????????????????????????
-                    //set player health ( element 4 [3]
-                    p.Health = int.Parse(playerDetails[4]);
-                    // set player coins (elements 5 [4])
-                    p.Coins = int.Parse(playerDetails[5]);
-                    //set player points (element 6 [5]
-                    p.Points = int.Parse(playerDetails[6]);
-                    count++;// player number
-                    gameClients.Add(p);*/
-                }
-                
-                
+                   
+                    foreach (Player p in Game.getPlayers())
+                    {
+                        if (p.PlayerNo == playerDetails[0])  //in player details there are 6 items in msg
+                        {
+                            string[] playerXY = playerDetails[1].Split(',');
+                            p.setCordinates(int.Parse(playerXY[0]), int.Parse(playerXY[1]));
+                            p.Direction = int.Parse(playerDetails[2]);
+                            p.Shoot = int.Parse(playerDetails[3]);
+                            p.Health = int.Parse(playerDetails[4]);
+                            p.Coins = int.Parse(playerDetails[5]);
+                            p.Points = int.Parse(playerDetails[6]);
+                        }
+                    }
+               
             }
-
-
-            //return gameClients and brick damages
-           /* gameBoard.updatePlayerLocation(gameClients);
-            gameBoard.updateDamageBricks(brickDamage);*/
+            //Map.initMap(Game.getWall(), Game.getStone(), Game.getWater());
+            //Map.initPlayers(Game.getPlayers());
+            Map.updateMap();
+            Program.printMap();
         }
 
-        public void coin_popup(string msg)
+        public static void coin_popup(string msg)
         {
             //C:<x>,<y>:<LT>:<Val>#
             String[] coinDetails = msg.Split(':');
-            String[] cointSplit = coinDetails[1].Split(',');
-           /* Point p = new Point(int.Parse(cointSplit[0]), int.Parse(cointSplit[1]));
-            Coin c = new Coin(p, int.Parse(coinDetails[2]), int.Parse(coinDetails[3]));
-            gameBoard.setCoins(c);*/
+            String[] coinXY = coinDetails[1].Split(',');
+
+            Coin newCoin = new Coin();
+            newCoin.setCordinates(int.Parse(coinXY[0]), int.Parse(coinXY[1]));
+            newCoin.setLife(int.Parse(coinDetails[2]));
+            newCoin.setValue(int.Parse(coinDetails[3]));
+
+            Game.setCoins(newCoin);
+            Map.updateMap();
+
+            Program.printMap();
 
         }
 
-        private void lifepack_popup(string message)
+        private static void lifepack_popup(string message)
         {
             // L:<x>,<y>:<LT>#
             String[] lifePackDetails = message.Split(':');
-            String[] lifeSplit = lifePackDetails[1].Split(',');
-            /* Point p = new Point(int.Parse(lifeSplit[0]), int.Parse(lifeSplit[1]));
-             LifePack L = new LifePack(p, int.Parse(lifePackDetails[2]));
-             gameBoard.setLifePack(L);*/
+            String[] lifepackXY = lifePackDetails[1].Split(',');
+
+            LifePack newLifePack = new LifePack();
+            newLifePack.setCordinates(int.Parse(lifepackXY[0]), int.Parse(lifepackXY[1]));
+            newLifePack.setLife(int.Parse(lifePackDetails[2]));
+
+            Game.setLifePacks(newLifePack);
+            Map.updateMap();
+
+            Program.printMap();
+            
         }
 
 

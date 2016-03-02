@@ -11,16 +11,16 @@ namespace TankgameG36ConsoleApp1.Model
     {
         private int[] cordinate;
         private int value;
-        private float lifeTime;
+        private int lifeTime;
 
         public void setCordinates(int x,int y){
             cordinate = new int[2] {x,y};
         }
-
         public int[] getCordinate()
         {
             return cordinate;
         }
+
         public void setValue(int value)
         {
             this.value = value;
@@ -28,7 +28,8 @@ namespace TankgameG36ConsoleApp1.Model
         public int getValue(){
             return value;
         }
-        public void setLife(float lifeTime)
+
+        public void setLife(int lifeTime)
         {
             this.lifeTime = lifeTime;
         }
@@ -36,5 +37,6 @@ namespace TankgameG36ConsoleApp1.Model
         {
             return lifeTime;
         }
+
     }
 }

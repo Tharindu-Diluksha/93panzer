@@ -41,7 +41,7 @@ namespace TankgameG36ConsoleApp1.Network
 
         public void ReceiveData()
         {
-            MessageHandler messagehandler = new MessageHandler();
+            
             bool errorOcurred = false;
             Socket connection = null; //The socket that is listened to       
             try
@@ -92,13 +92,14 @@ namespace TankgameG36ConsoleApp1.Network
                         //Console.WriteLine(ip + ": " + reply.Substring(0, reply.Length - 1));
                        
                        //Thread.Sleep(1000);
-                        messagehandler.decode(reply.Substring(0, reply.Length - 2));
+                       MessageHandler.decode(reply.Substring(0, reply.Length - 2));
                    }
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine("Communication (RECEIVING) Failed! \n " + e.Message);
+                Console.WriteLine(e);
                 errorOcurred = true;
                 Console.ReadLine();
                 
@@ -109,7 +110,7 @@ namespace TankgameG36ConsoleApp1.Network
                     if (connection.Connected)
                         connection.Close();
                 if (errorOcurred)
-                   this.ReceiveData();
+                    connection.Close();
                     
             }
         }

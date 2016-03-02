@@ -44,9 +44,11 @@
     <Compile Include="Controller\constant.cs" />
     <Compile Include="Model\Coin.cs" />
     <Compile Include="Model\DObject.cs" />
+    <Compile Include="Model\Game.cs" />
     <Compile Include="Model\LifePack.cs" />
     <Compile Include="Model\Map.cs" />
     <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\Wall.cs" />
     <Compile Include="Network\Communicator.cs" />
     <Compile Include="Network\MessageHandler.cs" />
     <Compile Include="Program.cs" />

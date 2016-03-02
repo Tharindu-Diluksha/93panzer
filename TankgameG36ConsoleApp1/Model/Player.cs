@@ -10,15 +10,15 @@ namespace Panzer_93.Model
     {
         String playerNo; // id of the player
         private int[] cordinate; //currant position of the player (X, Y)
-        int direction; // Currant heading direction (North = 0, south = 2, west = 3, East = 1)
-        int health_Level; // health level of the player
-        int coins; // count of coins colleted
-        int points; // count of points collected
-        int shots;
+        private int direction; // Currant heading direction (North = 0, south = 2, west = 3, East = 1)
+        private int health_Level; // health level of the player
+        private int coins; // count of coins colleted
+        private int points; // count of points collected
+        private int shoot;
 
         public void setCordinates(int x, int y)
         {
-            cordinate = new int[2] { x, y };
+           cordinate = new int[2] { x, y };
         }
 
         public int[] getCordinate()
@@ -56,10 +56,10 @@ namespace Panzer_93.Model
             get { return points; }
             set { points = value; }
         }
-        public int Shots
+        public int Shoot
         {
-            get { return shots; }
-            set { shots = value; }
+            get { return shoot; }
+            set { shoot = value; }
         }
 
         

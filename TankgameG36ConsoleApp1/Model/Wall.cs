@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace TankgameG36ConsoleApp1.Model
 {
-    class LifePack
+    class Wall
     {
         private int[] cordinate;
-        private int lifeTime;
+        private int damage;
 
         public void setCordinates(int x, int y)
         {
@@ -21,14 +21,15 @@ namespace TankgameG36ConsoleApp1.Model
             return cordinate;
         }
 
-        public void setLife(int lifeTime)
+        public void setdamage(int damage)
         {
-            this.lifeTime = lifeTime;
+            this.damage = damage;
+        }
+        public int getdamage()
+        {
+            return damage;
         }
 
-        public float getLife()
-        {
-            return lifeTime;
-        }
+
     }
 }
