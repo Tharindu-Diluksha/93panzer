@@ -18,6 +18,7 @@ namespace TankgameG36ConsoleApp1
         {
             System.Console.WriteLine("In the main");
 
+            //DObject dataobject = new DObject("JOIN#", "192.168.1.1", 6000);
             DObject dataobject = new DObject("JOIN#", "127.0.0.1", 6000);
             serverConnection.SendData(dataobject);
 

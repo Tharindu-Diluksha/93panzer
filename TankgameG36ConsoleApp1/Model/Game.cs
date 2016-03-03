@@ -11,7 +11,8 @@ namespace TankgameG36ConsoleApp1.Model
     {
         private static String myName;
         private static Player ourPlayer;
-        private static List<Array> movableCellList;
+        //private static List<Array> movableCellList;
+        private static List<ReachableCell> movableCellList;
         private static List<Array> fixedCellList;
         private static List<Player> playerList;
         private static List<Coin> coinPillList;
@@ -25,7 +26,7 @@ namespace TankgameG36ConsoleApp1.Model
             walllist = new List<Array>(); //bricks which can be destroyed by shooting
             stonelist = new List<Array>();
             waterlist = new List<Array>();
-            movableCellList = new List<Array>();
+            movableCellList = new List<ReachableCell>();
             fixedCellList = new List<Array>();
             playerList = new List<Player>();
             coinPillList = new List<Coin>();
@@ -51,11 +52,11 @@ namespace TankgameG36ConsoleApp1.Model
             return ourPlayer;
         }
 
-        public static void setMovableCells(int[] XY)
+        public static void setMovableCells(ReachableCell rc)
         {
-            movableCellList.Add(XY);
+            movableCellList.Add(rc);
         }
-        public static List<Array> getMovableCells()
+        public static List<ReachableCell> getMovableCells()
         {
             return movableCellList;
         }

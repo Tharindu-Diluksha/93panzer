@@ -47,6 +47,7 @@ namespace TankgameG36ConsoleApp1.Network
             try
             {
                 //Creating listening Socket
+                //this.listener = new TcpListener(IPAddress.Parse("192.168.1.1"), 7000);
                 this.listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 7000);
                 //Starts listening
                 this.listener.Start();
@@ -118,6 +119,7 @@ namespace TankgameG36ConsoleApp1.Network
         public void SendData(object stateInfo)
         {
             DObject dataObj = (DObject)stateInfo;
+          
             //Opening the connection
             this.client = new TcpClient();
 
@@ -127,6 +129,7 @@ namespace TankgameG36ConsoleApp1.Network
                 {
 
                     this.client.Connect(dataObj.ClientMachine, dataObj.ClientPort);
+                    
 
                     if (this.client.Connected)
                     {

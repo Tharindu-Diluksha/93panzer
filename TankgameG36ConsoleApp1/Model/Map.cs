@@ -32,7 +32,9 @@ namespace TankgameG36ConsoleApp1.Model
                     if (mapDetail[i, j] == null || mapDetail[i, j] != "S" || mapDetail[i, j] != "W" || mapDetail[i, j] != "B0" || mapDetail[i, j] != "B1" || mapDetail[i, j] != "B2" || mapDetail[i, j] != "B3")
                     {
                         mapDetail[i, j] = "N";
-                        Game.setMovableCells(new int[2] {i,j});
+                        ReachableCell newReachableCell = new ReachableCell();
+                        newReachableCell.setCordinates(i,j);
+                        Game.setMovableCells(newReachableCell);
                     }
                     
                 }
@@ -62,7 +64,9 @@ namespace TankgameG36ConsoleApp1.Model
                     if (mapDetail[i, j] == null || (mapDetail[i, j] != "S" && mapDetail[i, j] != "W" && mapDetail[i, j] != "B0" && mapDetail[i, j] != "B1" && mapDetail[i, j] != "B2" && mapDetail[i, j] != "B3"))
                     {
                         mapDetail[i, j] = "N";
-                        Game.setMovableCells(new int[2] { i, j });
+                        ReachableCell newReachableCell = new ReachableCell();
+                        newReachableCell.setCordinates(i, j);
+                        Game.setMovableCells(newReachableCell);
                     }
                 }
             }
