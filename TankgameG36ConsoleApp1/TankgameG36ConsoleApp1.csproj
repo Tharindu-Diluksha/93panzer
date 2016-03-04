@@ -41,14 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AI\AI.cs" />
+    <Compile Include="AI\AiBrain.cs" />
+    <Compile Include="AI\BreadthFirstSearch.cs" />
+    <Compile Include="AI\GraphAdjList.cs" />
     <Compile Include="Controller\constant.cs" />
+    <Compile Include="Model\AdjCheker.cs" />
     <Compile Include="Model\Coin.cs" />
     <Compile Include="Model\DObject.cs" />
     <Compile Include="Model\Game.cs" />
     <Compile Include="Model\LifePack.cs" />
     <Compile Include="Model\Map.cs" />
     <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\ReachableCell.cs" />
     <Compile Include="Model\Wall.cs" />
     <Compile Include="Network\Communicator.cs" />
     <Compile Include="Network\MessageHandler.cs" />

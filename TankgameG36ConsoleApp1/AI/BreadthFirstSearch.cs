@@ -10,9 +10,9 @@ namespace TankgameG36ConsoleApp1.AI
     {
         public static int[] edgeTo;
         public static int[] distTo;
-        public static int s;
+        //public static int s;
 
-        public static BreadthFirstSearch(int start)
+        public static void doBreadthFirstSearch(int start)
         {
             edgeTo = new int[GraphAdjList.VertexCount];
             distTo = new int[GraphAdjList.VertexCount];
@@ -26,6 +26,16 @@ namespace TankgameG36ConsoleApp1.AI
             //this.s = s;
 
             BFS(start);
+            foreach (int a in distTo)
+            {
+                Console.Write(Convert.ToString(a)+" ");
+            }
+            Console.WriteLine();
+            foreach (int b in edgeTo)
+            {
+                Console.Write(Convert.ToString(b) + " ");
+            }
+            Console.WriteLine();
         }
 
         static void BFS(int s)
@@ -33,6 +43,7 @@ namespace TankgameG36ConsoleApp1.AI
             var queue = new Queue<int>();
             queue.Enqueue(s);
             distTo[s] = 0;
+            //edgeTo[s] = -1;
 
             while (queue.Count != 0)
             {

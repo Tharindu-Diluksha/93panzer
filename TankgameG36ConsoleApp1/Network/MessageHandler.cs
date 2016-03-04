@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TankgameG36ConsoleApp1.Model;
 using System.Drawing;
 using TankgameG36ConsoleApp1.Model;
+using TankgameG36ConsoleApp1.AI;
 
 
 namespace TankgameG36ConsoleApp1.Network
@@ -178,6 +179,7 @@ namespace TankgameG36ConsoleApp1.Network
             Game.setOurPlayer();
             Map.initPlayers(Game.getPlayers());
             Program.printMap();
+            
         }
         
         public static void Client_update_decode(string msg)
@@ -221,6 +223,21 @@ namespace TankgameG36ConsoleApp1.Network
             }
             Map.updateMap();
             Program.printMap();
+            
+            /*Console.WriteLine("movablecellArray : ");
+            Console.WriteLine(Game.getMovableCells().Count());
+            foreach (ReachableCell r in Game.getMovableCells())
+            {
+                Console.Write(Convert.ToString(r.getLocation())+" ");
+            }
+            Console.WriteLine();*/
+            AiBrain.runMeFindShortestPath();
+            /*Console.WriteLine(Game.getMovableCells()[Game.getMovableCells().Count -1].getLocation());
+            Console.WriteLine(Game.getMovableCells().Count);
+            foreach (int i in Game.getMovableCells()[Game.getMovableCells().Count -1].getShortestPath())
+            {
+                Console.Write(Convert.ToString(i)+" ");
+            }*/
         }
 
         public static void coin_popup(string msg)

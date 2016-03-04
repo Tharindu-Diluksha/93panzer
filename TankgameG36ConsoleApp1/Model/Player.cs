@@ -15,6 +15,7 @@ namespace TankgameG36ConsoleApp1.Model
         private int coins; // count of coins colleted
         private int points; // count of points collected
         private int shoot;
+        private List<int> playerPath;
 
         public void setCordinates(int x, int y)
         {

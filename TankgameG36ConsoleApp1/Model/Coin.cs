@@ -10,15 +10,27 @@ namespace TankgameG36ConsoleApp1.Model
     class Coin
     {
         private int[] cordinate;
+        private int location;
         private int value;
         private int lifeTime;
 
         public void setCordinates(int x,int y){
             cordinate = new int[2] {x,y};
+            setLocation((10*x)+y);
         }
         public int[] getCordinate()
         {
             return cordinate;
+        }
+
+        private void setLocation(int loc)
+        {
+            location = loc;
+        }
+
+        public int getLocation()
+        {
+            return location;
         }
 
         public void setValue(int value)

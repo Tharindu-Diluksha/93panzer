@@ -29,7 +29,7 @@ namespace TankgameG36ConsoleApp1.Model
             {
                 for (int j = 0; j < 10; j++)
                 {
-                    if (mapDetail[i, j] == null || mapDetail[i, j] != "S" || mapDetail[i, j] != "W" || mapDetail[i, j] != "B0" || mapDetail[i, j] != "B1" || mapDetail[i, j] != "B2" || mapDetail[i, j] != "B3")
+                    if (mapDetail[i, j] == null || (mapDetail[i, j] != "S" && mapDetail[i, j] != "W" && mapDetail[i, j] != "B0" && mapDetail[i, j] != "B1" && mapDetail[i, j] != "B2" && mapDetail[i, j] != "B3"))
                     {
                         mapDetail[i, j] = "N";
                         ReachableCell newReachableCell = new ReachableCell();
@@ -64,9 +64,9 @@ namespace TankgameG36ConsoleApp1.Model
                     if (mapDetail[i, j] == null || (mapDetail[i, j] != "S" && mapDetail[i, j] != "W" && mapDetail[i, j] != "B0" && mapDetail[i, j] != "B1" && mapDetail[i, j] != "B2" && mapDetail[i, j] != "B3"))
                     {
                         mapDetail[i, j] = "N";
-                        ReachableCell newReachableCell = new ReachableCell();
+                        /*ReachableCell newReachableCell = new ReachableCell();
                         newReachableCell.setCordinates(i, j);
-                        Game.setMovableCells(newReachableCell);
+                        Game.setMovableCells(newReachableCell);*/
                     }
                 }
             }

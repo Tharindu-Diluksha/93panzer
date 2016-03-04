@@ -31,11 +31,7 @@ namespace TankgameG36ConsoleApp1
             print.Start();
             Thread.Sleep(1000);*/
             
-            // This is used in methods to print
-            
-
-            
-            
+            // This is used in methods to print   
            
         }
 

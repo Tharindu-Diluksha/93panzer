@@ -25,13 +25,19 @@ namespace TankgameG36ConsoleApp1.Model
         {
             cordinate = new int[2] { x, y };
             setLocation((10*x)+y);
+            shortestPath = new List<int>();
+            
         }
 
         public int[] getCordinate()
         {
             return cordinate;
         }
-
+        public void clearShortestPathList()
+        {
+            shortestPath.Clear();
+            shortestPath = new List<int>();
+        }
         public void setShortestPath(int direction)
         {
             shortestPath.Add(direction);
