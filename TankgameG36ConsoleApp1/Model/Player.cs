@@ -10,6 +10,7 @@ namespace TankgameG36ConsoleApp1.Model
     {
         String playerNo; // id of the player
         private int[] cordinate; //currant position of the player (X, Y)
+        private int location;
         private int direction; // Currant heading direction (North = 0, south = 2, west = 3, East = 1)
         private int health_Level; // health level of the player
         private int coins; // count of coins colleted
@@ -20,11 +21,22 @@ namespace TankgameG36ConsoleApp1.Model
         public void setCordinates(int x, int y)
         {
            cordinate = new int[2] { x, y };
+           setLocation((10*x)+y);
         }
 
         public int[] getCordinate()
         {
             return cordinate;
+        }
+
+        private void setLocation(int loc)
+        {
+            location = loc;
+        }
+
+        public int getLocation()
+        {
+            return location;
         }
 
         public string PlayerNo

@@ -37,6 +37,7 @@ namespace TankgameG36ConsoleApp1.Model
         {
             myName = name;
         }
+
         public static void setOurPlayer()
         {
             foreach (Player p in Game.getPlayers())

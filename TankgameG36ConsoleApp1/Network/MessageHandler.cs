@@ -223,7 +223,8 @@ namespace TankgameG36ConsoleApp1.Network
             }
             Map.updateMap();
             Program.printMap();
-            
+
+            Console.WriteLine(Game.getMovableCells().Count());
             /*Console.WriteLine("movablecellArray : ");
             Console.WriteLine(Game.getMovableCells().Count());
             foreach (ReachableCell r in Game.getMovableCells())

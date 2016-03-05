@@ -13,6 +13,8 @@ namespace TankgameG36ConsoleApp1.Model
         private int location;
         private int value;
         private int lifeTime;
+        private int distance;
+
 
         public void setCordinates(int x,int y){
             cordinate = new int[2] {x,y};
@@ -48,6 +50,15 @@ namespace TankgameG36ConsoleApp1.Model
         public int getLife()
         {
             return lifeTime;
+        }
+
+        public void setDistance(int distance)
+        {
+            this.distance = distance;
+        }
+        public int getDistance()
+        {
+            return distance;
         }
 
     }

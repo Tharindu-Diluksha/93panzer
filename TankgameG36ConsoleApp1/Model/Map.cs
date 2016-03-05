@@ -190,5 +190,10 @@ namespace TankgameG36ConsoleApp1.Model
             }
             
         }
+
+        public static String[,] getMapDetail()
+        {
+            return mapDetail;
+        }
     }
 }
